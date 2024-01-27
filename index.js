@@ -22,6 +22,7 @@ app.use("/api/admin/blogs", require("./routes/admin/blogs"));
 app.use("/api/admin/admin", require("./routes/admin/auth"));
 
 //Client Routes
+app.use("/api/client/gallery", require("./routes/client/gallery"));
 app.use("/api/client/blogs", require("./routes/client/blogs"));
 
 app.listen(port, () => {
