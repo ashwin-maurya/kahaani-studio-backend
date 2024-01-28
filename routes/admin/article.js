@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Blogs = require("../../models/BlogCards");
-const BlogContent = require("../../models/BlogContent");
+const Articles = require("../../models/ArticleCards");
+const ArticleContent = require("../../models/ArticleContent");
 const authMiddleware = require("../../middlewares/authMiddleware");
 
 // Route to add a new blog
@@ -11,49 +11,49 @@ router.post("/add", authMiddleware, async (req, res) => {
 
     // Assuming you have a separate endpoint for adding blog content
     // Create the BlogContent first
-    const blogContent = new BlogContent({ content });
-    const savedBlogContent = await blogContent.save();
+    const articleContent = new ArticleContent({ content });
+    const savedArticleContent = await articleContent.save();
 
     // Create the Blog with the reference to BlogContent
-    const blog = new Blogs({
+    const articles = new Articles({
       title,
       category,
       imageURL,
-      blogContent: savedBlogContent._id,
+      articleContent: savedArticleContent._id,
     });
 
-    const savedBlog = await blog.save();
+    const savedArticles = await articles.save();
 
-    res.json(savedBlog);
+    res.json(savedArticles);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-router.get("/getBlogs", async (req, res) => {
+router.get("/getArticle", async (req, res) => {
   try {
-    const blogs = await Blogs.find({}, { blogContent: 0 }).exec();
-    res.json(blogs);
+    const articles = await Articles.find({}, { articleContent: 0 }).exec();
+    res.json(articles);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-router.get("/getBlogsWithContent/:blogId", async (req, res) => {
+router.get("/getArticlesWithContent/:articleId", async (req, res) => {
   try {
-    const { blogId } = req.params;
+    const { articleId } = req.params;
 
-    const blog = await Blogs.findOne({ _id: blogId })
-      .populate("blogContent")
+    const articles = await Articles.findOne({ _id: articleId })
+      .populate("articleContent")
       .exec();
 
-    if (!blog) {
+    if (!articles) {
       return res.status(404).json({ error: "Blog not found" });
     }
 
-    res.json(blog);
+    res.json(articles);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
