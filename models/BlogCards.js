@@ -8,6 +8,9 @@ const BlogsSchema = new mongoose.Schema({
   category: {
     type: String,
   },
+  location: {
+    type: String,
+  },
   imageURL: {
     type: String,
   },

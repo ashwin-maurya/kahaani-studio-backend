@@ -12,6 +12,22 @@ router.get("/getBlogs", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+router.get("/fetchBlogsByDestination/:location", async (req, res) => {
+  try {
+    const { location } = req.params;
+
+    // Use a regular expression with the case-insensitive flag
+    const blogs = await Blogs.find(
+      { location: { $regex: new RegExp(location, "i") } },
+      { blogContent: 0 }
+    );
+
+    res.json(blogs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 router.get("/getBlogsWithContent/:blogId", async (req, res) => {
   try {
     const { blogId } = req.params;

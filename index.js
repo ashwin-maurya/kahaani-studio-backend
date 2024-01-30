@@ -21,11 +21,13 @@ app.use("/api/admin/gallery", require("./routes/admin/gallery"));
 app.use("/api/admin/blogs", require("./routes/admin/blogs"));
 app.use("/api/admin/admin", require("./routes/admin/auth"));
 app.use("/api/admin/article", require("./routes/admin/article"));
+app.use("/api/admin/destination", require("./routes/admin/destination"));
 
 //Client Routes
 app.use("/api/client/gallery", require("./routes/client/gallery"));
 app.use("/api/client/blogs", require("./routes/client/blogs"));
 app.use("/api/client/article", require("./routes/client/article"));
+app.use("/api/client/destination", require("./routes/client/destination"));
 
 app.listen(port, () => {
   console.log(`app listening at port http://localhost:${port}`);

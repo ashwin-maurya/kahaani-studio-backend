@@ -2,12 +2,25 @@ const express = require("express");
 const router = express.Router();
 const Articles = require("../../models/ArticleCards");
 const ArticleContent = require("../../models/ArticleContent");
+const Destinations = require("../../models/Destinations");
 const authMiddleware = require("../../middlewares/authMiddleware");
 
 // Route to add a new blog
 router.post("/add", authMiddleware, async (req, res) => {
   try {
-    const { title, category, imageURL, content } = req.body;
+    const { title, category, location, imageURL, content } = req.body;
+
+    // Find or create the destination based on the location
+    let destination = await Destinations.findOne({ location });
+
+    if (!destination) {
+      // If the destination doesn't exist, create a new one
+      destination = new Destinations({ location, content: 0 });
+    }
+
+    // Increment the content count
+    destination.content += 1;
+    await destination.save();
 
     // Assuming you have a separate endpoint for adding blog content
     // Create the BlogContent first
@@ -18,6 +31,7 @@ router.post("/add", authMiddleware, async (req, res) => {
     const articles = new Articles({
       title,
       category,
+      location,
       imageURL,
       articleContent: savedArticleContent._id,
     });

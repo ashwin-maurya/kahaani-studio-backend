@@ -31,4 +31,21 @@ router.get("/getArticlesWithContent/:articleId", async (req, res) => {
   }
 });
 
+router.get("/fetchArticleByDestination/:location", async (req, res) => {
+  try {
+    const { location } = req.params;
+
+    // Use a regular expression with the case-insensitive flag
+    const articles = await Articles.find(
+      { location: { $regex: new RegExp(location, "i") } },
+      { articleContent: 0 }
+    );
+
+    res.json(articles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
