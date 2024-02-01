@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Blogs = require("../../models/BlogCards");
-const BlogContent = require("../../models/BlogContent");
 
 router.get("/getBlogs", async (req, res) => {
   try {

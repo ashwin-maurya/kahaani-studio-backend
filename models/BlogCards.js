@@ -23,5 +23,6 @@ const BlogsSchema = new mongoose.Schema({
     ref: "BlogContent",
   },
 });
+BlogsSchema.index({ title: "text", blogContent: "text" });
 
 module.exports = mongoose.model("Blogs", BlogsSchema);

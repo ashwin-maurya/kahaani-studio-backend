@@ -28,6 +28,7 @@ app.use("/api/client/gallery", require("./routes/client/gallery"));
 app.use("/api/client/blogs", require("./routes/client/blogs"));
 app.use("/api/client/article", require("./routes/client/article"));
 app.use("/api/client/destination", require("./routes/client/destination"));
+app.use("/api/client/search", require("./routes/client/search"));
 
 app.listen(port, () => {
   console.log(`app listening at port http://localhost:${port}`);

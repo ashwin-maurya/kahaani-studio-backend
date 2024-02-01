@@ -12,4 +12,6 @@ const DestinationSchema = new mongoose.Schema({
   },
 });
 
+DestinationSchema.index({ location: "text" });
+
 module.exports = mongoose.model("Destinations", DestinationSchema);
